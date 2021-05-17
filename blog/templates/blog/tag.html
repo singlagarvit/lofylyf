@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}<title>{{ tag.tag }} | Blog | Lofylife</title>{% endblock %}
+{% block page_class %}articles-category{% endblock %}
+{% block content %}
+<!-- BEGIN .articles -->
+<section class="articles">
+  <header class="articles__header">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="articles__title">
+            {{ tag.tag }}
+          </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-12">
+          <ul class="o-tags mt-3">
+            <li class="o-tags__item">
+              <a class="badge badge-primary badge-outline" href="{% url 'blog:posts' %}">
+                All
+              </a>
+            </li>
+            {% for tag in other_tags %}
+            <li class="o-tags__item">
+              <a class="badge badge-primary badge-outline" href="{{ tag.get_absolute_url }}">
+                {{ tag.tag }}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+</section>
+
+<!-- BEGIN .featured-category "LATEST POSTS" -->
+  <section class="featured-category">
+    <div class="container">
+      <div class="row featured-category__article-list">
+      	{% for post in tag.post_set.all %}
+        <div class="featured-category__article col-12 col-md-4 {% if forloop.counter < 4 %}featured-category__article--top-row{% else %}featured-category__article{% endif %} is-article-visible-desktop is-article-visible-mobile" data-article-span="{{ forloop.counter }}">
+          <a class="featured-category__article-link" href="{{ post.get_absolute_url }}">
+            <img class="featured-category__article-image lazy js-cover-image" data-src="{{ post.thumbnail.url }}" data-placeholder-dimensions="800x300">
+            <h6 class="text-secondary featured-category__article-date">
+              {{ post.created_on|date }}
+            </h6>
+            <h5 class="featured-category__article-title">
+              {{ post.title }}
+            </h5>
+          </a>
+        </div>
+        {% empty %}
+        <div class="row">
+          <div class="col-12">
+            <h2 class="articles__title">
+              No Results Found
+            </h2>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <!-- END .featured-category "LATEST POSTS" -->
+<!-- END .articles -->
+{% endblock %}

@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Home | Lofylyf</title>
+{% endblock %}
+{% block page_class %}index{% endblock %}
+{% block content %}
+<!-- BEGIN .hero -->
+<section class="hero hero-slideshow">
+  <div class="hero__container o-slideshow">
+    <div class="container u-height-full">
+      <div class="js-hero-slideshow swiper-container u-height-full">
+        <div class="swiper-wrapper">
+          {% for post in featured_posts %}
+          <div class="swiper-slide">
+            <div class="row u-height-full fill-height">
+              <div class="grid__col col-12 col-lg-6 order-lg-12 u-height-full">
+                <div class="o-slideshow__article-images">
+                  <div class="o-slideshow__block-reveal o-slideshow__block-reveal--top"></div>
+                  <img class="o-slideshow__article-image swiper-lazy js-cover-image" data-src="{{ post.thumbnail.url }}" data-placeholder-dimensions="600x600">
+                </div>
+              </div>
+              <div class="grid__col col-12 col-lg-6 order-lg-1 u-height-full flex-grow-1">
+                <div class="o-slideshow__article-text">
+                  <h6 class="text-secondary o-slideshow__info--date">
+                    {{ post.created_on|date }}
+                  </h6>
+                  <h3 class="o-slideshow__info o-slideshow__info--title">
+                    <strong>{{ post.category.title }} —</strong> {{ post.title }}
+                  </h3>
+                  <h6 class="text-secondary o-slideshow__info o-slideshow__info--content"> 
+                    {{ post.content|safe|truncatechars:85 }}
+                  </h6>
+                  <a class="btn btn-outline-primary font-serif o-slideshow__button o-button o-button--icon-right" href="{{ post.get_absolute_url }}">
+                    Learn more
+                    <img src="{% static 'images/icons/arrow-link.svg' %}" class="js-inline-svg' %}" onerror="this.src='{% static 'images/icons/arrow-link.png' %}'"/>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% if latest_posts.count > 1 %}
+        <div class="o-slideshow__ui">
+          <a class="js-hero-slideshow-button-previous page-link--arrow page-link--arrow-previous o-slideshow__ui-arrow">
+          </a>
+          <div class="js-hero-slideshow-number-current o-slideshow__ui-number o-slideshow__ui-number--current">
+            1
+          </div>
+          <div class="o-slideshow__ui-progress-bar-container">
+            <div class="js-hero-slideshow-progress-bar o-slideshow__ui-progress-bar" style="width: 33.333333333333336%;">
+            </div>
+          </div>
+          <div class="o-slideshow__ui-number o-slideshow__ui-number--total">
+            3
+          </div>
+          <a class="js-hero-slideshow-button-next page-link--arrow page-link--arrow-next o-slideshow__ui-arrow is-hero-arrow-enabled">
+          </a>
+        </div>
+        <div class="slideshow-mobile-navigation">
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+<!-- END .hero -->
+
+<!-- BEGIN .featured-category "LATEST POSTS" -->
+<section class="featured-category js-has-pagination has-pagination">
+  <div class="container">
+    <h5 class="featured-category__title font-sans-serif">
+      Latest Posts
+    </h5>
+    <a class="btn btn-link float-right" href="{% url 'blog:posts' %}">
+      See all posts
+    </a>
+    <div class="row featured-category__article-list js-pagination-control-area pagination-control-area">
+      {% for post in latest_posts %}
+      <div class="featured-category__article col-12 col-md-4 featured-category__article--top-row featured-category__article--top-article is-article-visible-desktop {% if forloop.first %}is-article-visible-mobile{% endif %} js-pagination-target" data-article-span="1" data-article-page-desktop="1" data-article-page-mobile="{{ forloop.counter }}">
+        <a class="featured-category__article-link" href="{{ post.get_absolute_url }}">
+          <img class="featured-category__article-image lazy js-cover-image" data-src="{{ post.thumbnail.url }}" data-placeholder-dimensions="800x300">
+          <h6 class="text-secondary featured-category__article-date">
+            {{ post.created_on|date }}
+          </h6>
+          <h5 class="featured-category__article-title">
+            {{ post.title }}
+          </h5>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- END .featured-category "LATEST POSTS" -->
+
+<!-- BEGIN .page-separator -->
+<div class="page-separator">
+  <div class="container">
+    <div class="separator">
+    </div>
+  </div>
+</div>
+<!-- END .page-separator -->
+
+
+{% for category in featured_categories %}
+{% if category.post_set.all.count %}
+<!-- BEGIN .featured-category "{{ category.title|title }}" -->
+<section class="featured-category">
+  <div class="container">
+    <h5 class="featured-category__title font-sans-serif">
+      {{ category.title }}
+    </h5>
+    <a class="btn btn-link float-right" href="{{ category.get_absolute_url }}">
+      See all in {{ category.title|lower }}
+    </a>
+    <div class="row featured-category__article-list">
+      {% for post in category.post_set.all %}
+      {% if forloop.counter < 3 %}
+      <div class="featured-category__article col-12 {% if forloop.first %}col-md-4{% else %}col-md-8{% endif %} featured-category__article--top-row is-article-visible-desktop is-article-visible-mobile" data-article-span="{{ forloop.counter }}">
+        <a class="featured-category__article-link" href="{{ post.get_absolute_url }}">
+          <img class="featured-category__article-image lazy js-cover-image" data-src="{{ post.thumbnail.url }}" data-placeholder-dimensions="800x300">
+          <h6 class="text-secondary featured-category__article-date">
+            {{ post.created_on|date }}
+          </h6>
+          <h5 class="featured-category__article-title">
+            {{ post.title }}
+          </h5>
+        </a>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- END .featured-category "{{ category.title|title }}" -->
+{% endif %}
+{% endfor %}
+
+<!-- BEGIN .featured-lists -->
+<section class="featured-lists">
+  <div class="container">
+    <div class="row">
+      <!-- BEGIN .featured-list "LAST POSTS" -->
+      <div class="col-12 col-md-6">
+        <div class="featured-list featured-list--first">
+          <h5 class="font-sans-serif featured-list__title">
+            Latest Posts
+          </h5>
+          <ul class="featured-list__items">
+            {% for post in latest_posts %}
+            <li class="featured-list__item">
+              <a class="featured-list__article" href="{{ post.get_absolute_url }}">
+                <div class="row">
+                  <div class="col-4">
+                    <img class="featured-list__article-image lazy js-cover-image" data-src="{{ post.thumbnail.url }}" data-placeholder-dimensions="200">
+                  </div>
+                  <div class="col-8">
+                    <h6 class="text-secondary featured-list__article-date">
+                      {{ post.created_on|date }}
+                    </h6>
+                    <h5 class="featured-list__article-title">
+                      {{ post.title }}
+                    </h5>
+                  </div>
+                </div>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <!-- END .featured-list "LAST POSTS" -->
+      <!-- BEGIN .featured-list "MOST POPULAR" -->
+      <!-- END .featured-list "MOST POPULAR" -->
+    </div>
+  </div>
+</section>
+<!-- END .featured-lists -->  
+
+<!-- BEGIN .subscribe "SUBSCRIBE TO MY NEWSLETTER" -->
+<section class="subscribe">
+  <div class="subscribe__container d-flex align-items-center">
+    <img class="subscribe__image lazy js-cover-image" data-src="{% static 'images/subscribe/green-chameleon-s9CC2SKySJM-unsplash_optimized.jpg' %}" data-srcset="{% static 'images/subscribe/green-chameleon-s9CC2SKySJM-unsplash_optimized@2x.jpg' %} 2x" data-placeholder-dimensions="1300x800">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-10 offset-md-1">
+          <div class="subscribe__content-wrapper">
+            <h2 class="subscribe__title font-sans-serif">
+              Subscribe to my newsletter
+            </h2>
+            <h6 class="subscribe__description text-secondary font-sans-serif">
+              Subscribe and I'll send you my latest blog posts and other news by email.
+            </h6>
+            <form action="{% url 'core:subscribe' %}" method="post" class="subscribe__form">
+              <div class="form-group o-text-input-with-submit">
+                {% csrf_token %}
+                {{ nf.email }}
+                <!-- <input id="mce-EMAIL" type="email" value="" name="EMAIL" class="form-control" type="email" placeholder="Your email address" name="email"> -->
+                <input id="mc-embedded-subscribe" type="submit" aria-label="Subscribe" name="subscribe">
+              </div>
+              <div class="subscribe__response js-subscribe-response">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- END .subscribe "SUBSCRIBE TO MY NEWSLETTER" -->
+
+<!-- BEGIN .instagram "FOLLOW @ INSTAGRAM" -->
+<!-- END .instagram "FOLLOW @ INSTAGRAM" -->
+{% endblock %}
