@@ -66,9 +66,8 @@
   </div>
 </section>
 <!-- END .hero -->
-
 <!-- BEGIN .featured-category "LATEST POSTS" -->
-<section class="featured-category js-has-pagination has-pagination">
+<section class="featured-category">
   <div class="container">
     <h5 class="featured-category__title font-sans-serif">
       Latest Posts
@@ -76,7 +75,7 @@
     <a class="btn btn-link float-right" href="{% url 'blog:posts' %}">
       See all posts
     </a>
-    <div class="row featured-category__article-list js-pagination-control-area pagination-control-area">
+    <div class="row featured-category__article-list">
       {% for post in latest_posts %}
       <div class="featured-category__article col-12 col-md-4 featured-category__article--top-row featured-category__article--top-article is-article-visible-desktop {% if forloop.first %}is-article-visible-mobile{% endif %} js-pagination-target" data-article-span="1" data-article-page-desktop="1" data-article-page-mobile="{{ forloop.counter }}">
         <a class="featured-category__article-link" href="{{ post.get_absolute_url }}">
@@ -94,7 +93,6 @@
   </div>
 </section>
 <!-- END .featured-category "LATEST POSTS" -->
-
 <!-- BEGIN .page-separator -->
 <div class="page-separator">
   <div class="container">
@@ -214,4 +212,5 @@
 
 <!-- BEGIN .instagram "FOLLOW @ INSTAGRAM" -->
 <!-- END .instagram "FOLLOW @ INSTAGRAM" -->
+
 {% endblock %}
