@@ -37,14 +37,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 
     'core.apps.CoreConfig',
     'blog.apps.BlogConfig',
     'ckeditor',
     'ckeditor_uploader',
+    'robots',
 ]
 
+SITE_ID = 1
+
 CKEDITOR_UPLOAD_PATH = 'uploads/'
+
+ROBOTS_USE_SCHEME_IN_HOST = True
+ROBOTS_SITEMAP_URLS = [
+    'https://lofilyf.com/sitemap.xml',
+]
+ROBOTS_CACHE_TIMEOUT = 60*60*24
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -16,9 +16,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from django.contrib.sitemaps.views import sitemap
+from blog.sitemaps import CategorySitemap, TagSitemap, PostSitemap
+from core.sitemaps import CoreSitemap
+
+sitemaps = {
+    'core': CoreSitemap,
+    'category': CategorySitemap,
+    'tag': TagSitemap,
+    'post': PostSitemap
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt', include('robots.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('core.urls', namespace='core')),
     path('blog/', include('blog.urls', namespace='blog')),
