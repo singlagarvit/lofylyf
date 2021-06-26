@@ -43,7 +43,7 @@
       	{% for post in tag.post_set.all %}
         <div class="featured-category__article col-12 col-md-4 {% if forloop.counter < 4 %}featured-category__article--top-row{% else %}featured-category__article{% endif %} is-article-visible-desktop is-article-visible-mobile" data-article-span="{{ forloop.counter }}">
           <a class="featured-category__article-link" href="{{ post.get_absolute_url }}">
-            <img class="featured-category__article-image lazy js-cover-image" data-src="{{ post.thumbnail.url }}" data-placeholder-dimensions="800x300">
+            <img alt="{% if post.alt_tag_thumbnail %}{{ post.alt_tag_thumbnail }}{% endif %}" class="featured-category__article-image lazy js-cover-image" data-src="{{ post.thumbnail.url }}" data-placeholder-dimensions="800x300">
             <h6 class="text-secondary featured-category__article-date">
               {{ post.created_on|date }}
             </h6>

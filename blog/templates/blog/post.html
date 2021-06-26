@@ -23,7 +23,7 @@
       </div>
       <div class="row">
         <div class="col-12 col-sm-10 offset-sm-1">
-          <img class="article__image article__image--header js-cover-image" src="{{ post.banner.url }}" data-placeholder-dimensions="1300x800">
+          <img alt="{% if post.alt_tag_banner %}{{ post.alt_tag_banner }}{% endif %}" class="article__image article__image--header js-cover-image" src="{{ post.banner.url }}" data-placeholder-dimensions="1300x800">
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@
       	{% for p in related_posts %}
         <div class="featured-category__article col-12 col-md-4 featured-category__article--top-row is-article-visible-desktop is-article-visible-mobile" data-article-span="{{ forloop.counter }}">
           <a class="featured-category__article-link" href="{{ p.get_absolute_url }}">
-            <img class="featured-category__article-image lazy js-cover-image" data-src="{{ p.thumbnail.url }}" data-placeholder-dimensions="800x300">
+            <img alt="{% if p.alt_tag_thumbnail %}{{ p.alt_tag_thumbnail }}{% endif %}" class="featured-category__article-image lazy js-cover-image" data-src="{{ p.thumbnail.url }}" data-placeholder-dimensions="800x300">
             <h6 class="text-secondary featured-category__article-date">
               {{ p.created_on|date }}
             </h6>

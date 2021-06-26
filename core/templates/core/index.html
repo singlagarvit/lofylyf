@@ -1,10 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
-{% block meta %}
-<title>Lifestyle blogging for those who want some gigs on the side</title>
-<meta name="description" content="The Minimalists redefine what it means to live a meaningful, intentional life with less stuff and more experiences." />
-<meta name="keywords" content="tech blogs, technology blogging, lifestyle blogging, nature blogging, best lifestyle blogs, top tech blogs, best tech blogs, artificial intelligence blog, fashion and lifestyle blogs, information technology blogs, latest technology blogs, lifestyle blogger instagram, blogs on artificial intelligence, tech body blogspot" />
-{% endblock %}
+{% load static %}}
 {% block google %}
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PNT1K012G4"></script>
@@ -30,7 +25,7 @@
 							<div class="grid__col col-12 col-lg-6 order-lg-12 u-height-full">
 								<div class="o-slideshow__article-images">
 									<div class="o-slideshow__block-reveal o-slideshow__block-reveal--top"></div>
-									<img class="o-slideshow__article-image swiper-lazy js-cover-image" data-src="{{ post.thumbnail.url }}" data-placeholder-dimensions="600x600">
+									<img alt="{% if post.alt_tag_thumbnail %}{{ post.alt_tag_thumbnail }}{% endif %}" class="o-slideshow__article-image swiper-lazy js-cover-image" data-src="{{ post.thumbnail.url }}" data-placeholder-dimensions="600x600">
 								</div>
 							</div>
 							<div class="grid__col col-12 col-lg-6 order-lg-1 u-height-full flex-grow-1">
@@ -92,7 +87,7 @@
 			{% for post in latest_posts %}
 			<div class="featured-category__article col-12 col-md-4 featured-category__article--top-row featured-category__article--top-article is-article-visible-desktop {% if forloop.first %}is-article-visible-mobile{% endif %} js-pagination-target" data-article-span="1" data-article-page-desktop="1" data-article-page-mobile="{{ forloop.counter }}">
 				<a class="featured-category__article-link" href="{{ post.get_absolute_url }}">
-					<img class="featured-category__article-image lazy js-cover-image" data-src="{{ post.thumbnail.url }}" data-placeholder-dimensions="800x300">
+					<img alt="{% if post.alt_tag_thumbnail %}{{ post.alt_tag_thumbnail }}{% endif %}" class="featured-category__article-image lazy js-cover-image" data-src="{{ post.thumbnail.url }}" data-placeholder-dimensions="800x300">
 					<h6 class="text-secondary featured-category__article-date">
 						{{ post.created_on|date }}
 					</h6>
@@ -129,7 +124,7 @@
 			{% for post in category.post_set.all %}
 			{% if forloop.counter < 3 %} <div class="featured-category__article col-12 {% if forloop.first %}col-md-4{% else %}col-md-8{% endif %} featured-category__article--top-row is-article-visible-desktop is-article-visible-mobile" data-article-span="{{ forloop.counter }}">
 				<a class="featured-category__article-link" href="{{ post.get_absolute_url }}">
-					<img class="featured-category__article-image lazy js-cover-image" data-src="{{ post.thumbnail.url }}" data-placeholder-dimensions="800x300">
+					<img alt="{% if post.alt_tag_thumbnail %}{{ post.alt_tag_thumbnail }}{% endif %}" class="featured-category__article-image lazy js-cover-image" data-src="{{ post.thumbnail.url }}" data-placeholder-dimensions="800x300">
 					<h6 class="text-secondary featured-category__article-date">
 						{{ post.created_on|date }}
 					</h6>
@@ -162,7 +157,7 @@
 							<a class="featured-list__article" href="{{ post.get_absolute_url }}">
 								<div class="row">
 									<div class="col-4">
-										<img class="featured-list__article-image lazy js-cover-image" data-src="{{ post.thumbnail.url }}" data-placeholder-dimensions="200">
+										<img alt="{% if post.alt_tag_thumbnail %}{{ post.alt_tag_thumbnail }}{% endif %}" class="featured-list__article-image lazy js-cover-image" data-src="{{ post.thumbnail.url }}" data-placeholder-dimensions="200">
 									</div>
 									<div class="col-8">
 										<h6 class="text-secondary featured-list__article-date">

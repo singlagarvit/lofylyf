@@ -7,6 +7,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   {% block meta %}{% endblock %}
+  {% for tag in meta_tags %}
+  {% if tag.name == 'title' and tag.page == request.resolver_match.url_name%}<title>{{ tag.content }}</title>{% endif %}
+  {% if tag.name != 'title' and tag.page == request.resolver_match.url_name %}<meta name="{{ tag.name }}" content="{{ tag.content }}" />{% endif %}
+  {% endfor %}
   <link rel="canonical" href="/" />
 
   <!-- Favicon -->

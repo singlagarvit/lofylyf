@@ -1,5 +1,11 @@
 from django.db import models
 
+PAGE_CHOICES = (
+	('index', 'home'),
+	('about', 'about'),
+	('contact', 'contact'),
+)
+
 class Query(models.Model):
 	name = models.CharField(max_length=120)
 	email = models.EmailField()
@@ -19,3 +25,11 @@ class Newsletter(models.Model):
 
 	def __str__(self):
 		return self.email
+
+class MetaTag(models.Model):
+	page = models.CharField(max_length=7, choices=PAGE_CHOICES)
+	name = models.CharField(max_length=20)
+	content = models.TextField()
+
+	def __str__(self):
+		return self.name
